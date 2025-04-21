@@ -59,8 +59,7 @@ services:
     depends_on:
       - mirakc
       - b25
-    command:
-      - sleep 15 && /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
+    command: sleep 15 && /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
     volumes:
       - type: bind
         source: "./EDCB/Common.ini"
