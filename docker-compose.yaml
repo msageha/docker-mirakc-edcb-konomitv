@@ -1,6 +1,7 @@
 services:
   mirakc:
     container_name: mirakc
+    image: docker.io/mirakc/mirakc:alpine
     build:
       context: https://github.com/mirakc/mirakc.git
       dockerfile: docker/Dockerfile.alpine
