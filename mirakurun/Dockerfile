@@ -8,9 +8,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential git && \
     git clone https://github.com/Chinachu/Mirakurun.git && \
     cd Mirakurun && \
-    npm ci --include=dev && \
+    npm install --production=false && \
     npm run build && \
-    npm ci --omit=dev
+    npm install -g --unsafe-perm --production
 
 FROM ${ARCH}node:22.14.0-bookworm-slim
 WORKDIR /app
