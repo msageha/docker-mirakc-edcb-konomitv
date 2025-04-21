@@ -6,11 +6,11 @@ ENV DOCKER=YES NODE_ENV=production
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends build-essential git && \
-    git clone https://github.com/Chinachu/Mirakurun.git && \
-    cd Mirakurun && \
+    git clone --depth 1 https://github.com/Chinachu/Mirakurun.git /app && \
     npm ci --include=dev && \
     npm run build && \
-    npm ci --omit=dev
+    npm ci --omit=dev && \
+    npm install source-map-support
 
 FROM ${ARCH}node:22.14.0-bookworm-slim
 WORKDIR /app
@@ -52,7 +52,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /usr/local/lib/node_modules/mirakurun /app
+COPY --from=build /app /app
 
 CMD ["./Mirakurun/docker/container-init.sh"]
 EXPOSE 40772 9229
