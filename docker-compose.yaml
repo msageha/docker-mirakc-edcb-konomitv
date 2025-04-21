@@ -1,84 +1,84 @@
 services:
-  mirakc:
-    container_name: mirakc
-    image: docker.io/mirakc/mirakc:alpine
-    build:
-      context: https://github.com/mirakc/mirakc.git
-      dockerfile: docker/Dockerfile.alpine
-    init: true
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - ./mirakc/epg:/var/lib/mirakc/epg
-      - ./mirakc/config.yaml:/etc/mirakc/config.yml:ro
-    environment:
-      TZ: Asia/Tokyo
-      RUST_LOG: info
-    devices:
-      - /dev/px4video0
-      - /dev/px4video1
-      - /dev/px4video2
-      - /dev/px4video3
-    ports:
-      - 40772:40772
-
-  bcas:
-    build: ./bcas
-    container_name: bcas
-    init: true
-    restart: unless-stopped
-    network_mode: host
-    environment:
-      TZ: Asia/Tokyo
-    devices:
-      # ICカードリーダーを追加
-      - /dev/bus/usb
-    ports:
-      - 40774:40774/tcp
-
-  b25:
-    build: ./b25
-    container_name: b25
-    depends_on:
-      - bcas
-    init: true
-    restart: unless-stopped
-    network_mode: host
-    environment:
-      BCAS_SERVER: 127.0.0.1:40774
-      TZ: Asia/Tokyo
-    ports:
-      - 40773:40773/tcp
-
   # mirakc:
-  #   container_name: mirakurun-3.9.0
+  #   container_name: mirakc
+  #   image: docker.io/mirakc/mirakc:alpine
   #   build:
-  #     context: "./mirakurun"
-  #   cap_add:
-  #     - SYS_ADMIN
-  #     - SYS_NICE
-  #   network_mode: host
-  #   ports:
-  #     - "40772:40772"
-  #     - "9229:9229"
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - ./mirakurun/conf:/app-config
-  #     - ./mirakurun/data:/app-data
-  #   environment:
-  #     TZ: "Asia/Tokyo"
-  #   devices:
-  #     - /dev/bus:/dev/bus
-  #     - /dev/px4video0:/dev/px4video0
-  #     - /dev/px4video1:/dev/px4video1
-  #     - /dev/px4video2:/dev/px4video2
-  #     - /dev/px4video3:/dev/px4video3
+  #     context: https://github.com/mirakc/mirakc.git
+  #     dockerfile: docker/Dockerfile.alpine
+  #   init: true
   #   restart: unless-stopped
-  #   logging:
-  #     driver: json-file
-  #     options:
-  #       max-file: "1"
-  #       max-size: 10m
+  #   network_mode: host
+  #   volumes:
+  #     - ./mirakc/epg:/var/lib/mirakc/epg
+  #     - ./mirakc/config.yaml:/etc/mirakc/config.yml:ro
+  #   environment:
+  #     TZ: Asia/Tokyo
+  #     RUST_LOG: info
+  #   devices:
+  #     - /dev/px4video0
+  #     - /dev/px4video1
+  #     - /dev/px4video2
+  #     - /dev/px4video3
+  #   ports:
+  #     - 40772:40772
+
+  # bcas:
+  #   build: ./bcas
+  #   container_name: bcas
+  #   init: true
+  #   restart: unless-stopped
+  #   network_mode: host
+  #   environment:
+  #     TZ: Asia/Tokyo
+  #   devices:
+  #     # ICカードリーダーを追加
+  #     - /dev/bus/usb
+  #   ports:
+  #     - 40774:40774/tcp
+
+  # b25:
+  #   build: ./b25
+  #   container_name: b25
+  #   depends_on:
+  #     - bcas
+  #   init: true
+  #   restart: unless-stopped
+  #   network_mode: host
+  #   environment:
+  #     BCAS_SERVER: 127.0.0.1:40774
+  #     TZ: Asia/Tokyo
+  #   ports:
+  #     - 40773:40773/tcp
+
+  mirakurun:
+    container_name: mirakurun-4.0.0
+    build:
+      context: "./mirakurun"
+    cap_add:
+      - SYS_ADMIN
+      - SYS_NICE
+    network_mode: host
+    ports:
+      - "40772:40772"
+      - "9229:9229"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./mirakurun/conf:/app-config
+      - ./mirakurun/data:/app-data
+    environment:
+      TZ: "Asia/Tokyo"
+    devices:
+      - /dev/bus:/dev/bus
+      - /dev/px4video0:/dev/px4video0
+      - /dev/px4video1:/dev/px4video1
+      - /dev/px4video2:/dev/px4video2
+      - /dev/px4video3:/dev/px4video3
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: "1"
+        max-size: 10m
 
   edcb_chscan:
     container_name: EDCB_ChScan
@@ -87,7 +87,7 @@ services:
     init: true
     network_mode: host
     depends_on:
-      - mirakc
+      - mirakurun
       # - b25
     command: /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
     volumes:
@@ -109,10 +109,10 @@ services:
     build:
       context: ./EDCB
     depends_on:
-      mirakc:
+      mirakurun:
         condition: service_started
-      b25:
-        condition: service_started
+      # b25:
+      #   condition: service_started
       edcb_chscan:
         condition: service_completed_successfully
     init: true
@@ -147,8 +147,8 @@ services:
     restart: unless-stopped
     network_mode: host
     depends_on:
-      - mirakc
-      - b25
+      - mirakurun
+      # - b25
       - edcb
     volumes:
       - type: bind
