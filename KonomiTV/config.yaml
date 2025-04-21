@@ -18,13 +18,13 @@ general:
     # tcp://edcb-namedpipe/ と指定すると、TCP API の代わりに名前付きパイプを使って通信します (ローカルのみ)。
     # 一部 Windows 環境では localhost の名前解決が遅いため、ストリーミング開始までの待機時間が長くなる場合があります。
     # EDCB と同じ PC に KonomiTV をインストールしている場合、localhost ではなく 127.0.0.1 の利用を推奨します。
-    edcb_url: 'tcp://localhost:4510/'
+    edcb_url: 'tcp://127.0.0.1:4510/'
 
     # Mirakurun / mirakc の HTTP API の URL
     # バックエンドに Mirakurun が選択されているときに利用されます。
     # 一部 Windows 環境では localhost の名前解決が遅いため、ストリーミング開始までの待機時間が長くなる場合があります。
     # Mirakurun / mirakc と同じ PC に KonomiTV をインストールしている場合、localhost ではなく 127.0.0.1 の利用を推奨します。
-    mirakurun_url: 'http://localhost:40772/'
+    mirakurun_url: 'http://127.0.0.1:40772/'
 
     # 利用するエンコーダー
     # FFmpeg・QSVEncC・NVEncC・VCEEncC・rkmppenc から選択してください。
