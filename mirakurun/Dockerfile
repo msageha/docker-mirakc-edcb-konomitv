@@ -54,5 +54,5 @@ RUN apt-get update && \
 
 COPY --from=build /app /app
 
-CMD ["./Mirakurun/docker/container-init.sh"]
+CMD ["./docker/container-init.sh"]
 EXPOSE 40772 9229
