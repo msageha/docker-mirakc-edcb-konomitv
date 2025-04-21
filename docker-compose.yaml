@@ -33,7 +33,7 @@ services:
       # ICカードリーダーを追加
       - /dev/bus/usb
     ports:
-      - 40774:40774
+      - 40774:40774/tcp
 
   b25:
     build: ./b25
@@ -47,7 +47,7 @@ services:
       BCAS_SERVER: bcas:40774
       TZ: Asia/Tokyo
     ports:
-      - 40773:40773
+      - 40773:40773/tcp
 
   edcb_chscan:
     container_name: EDCB_ChScan
@@ -104,7 +104,7 @@ services:
         source: "./EDCB/record"
         target: "/record"
     ports:
-      - 4510:4510
+      - 4510:4510/tcp
 
   konomitv:
     container_name: KonomiTV
