@@ -86,7 +86,7 @@ video:
     # 複数の保存先フォルダを指定できます。
     # Docker でインストールした場合も、ホストマシン側のフォルダの絶対パスを指定してください。
     recorded_folders: [
-        '/Users/mzk/Works/src/github.com/msageha/docker-mirakc-edcb-konomitv/KonomiTV/data/recoed',
+        '/KonomiTV/data/recoed',
     ]
 
 # =============================== キャプチャの設定 ===============================
@@ -98,5 +98,5 @@ capture:
     # 複数の保存先フォルダを指定できます。先頭から順に利用され、保存先フォルダがいっぱいになったら次の保存先フォルダに保存されます。
     # Docker でインストールした場合も、ホストマシン側のフォルダの絶対パスを指定してください。
     upload_folders: [
-        '/Users/mzk/Works/src/github.com/msageha/docker-mirakc-edcb-konomitv/KonomiTV/data/capture',
+        '/KonomiTV/data/capture',
     ]

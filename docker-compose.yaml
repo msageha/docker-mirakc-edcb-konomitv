@@ -59,7 +59,7 @@ services:
     depends_on:
       - mirakc
       - b25
-    command: sleep 15 && /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
+    command: /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
     volumes:
       - type: bind
         source: "./EDCB/Common.ini"
@@ -128,7 +128,10 @@ services:
         source: './KonomiTV/server/logs/'
         target: '/code/server/logs/'
       - type: bind
-        source: '/'
-        target: '/host-rootfs/'
+        source: './KonomiTV/data/record'
+        target: '/host-rootfs/KonomiTV/data/record'
+      - type: bind
+        source: './KonomiTV/data/capture'
+        target: '/host-rootfs/KonomiTV/data/capture'
     devices:
       - '/dev/dri/:/dev/dri/'
