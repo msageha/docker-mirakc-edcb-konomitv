@@ -7,7 +7,7 @@ services:
       dockerfile: docker/Dockerfile.alpine
     init: true
     restart: unless-stopped
-    # network_mode: host
+    network_mode: host
     volumes:
       - ./mirakc/epg:/var/lib/mirakc/epg
       - ./mirakc/config.yaml:/etc/mirakc/config.yml:ro
@@ -27,7 +27,7 @@ services:
     container_name: bcas
     init: true
     restart: unless-stopped
-    # network_mode: host
+    network_mode: host
     environment:
       TZ: Asia/Tokyo
     devices:
@@ -43,7 +43,7 @@ services:
       - bcas
     init: true
     restart: unless-stopped
-    # network_mode: host
+    network_mode: host
     environment:
       BCAS_SERVER: bcas:40774
       TZ: Asia/Tokyo
@@ -55,7 +55,7 @@ services:
     build:
       context: ./EDCB
     init: true
-    # network_mode: host
+    network_mode: host
     depends_on:
       - mirakc
       - b25
@@ -87,7 +87,7 @@ services:
         condition: service_completed_successfully
     init: true
     restart: unless-stopped
-    # network_mode: host
+    network_mode: host
     volumes:
       - type: bind
         source: "./EDCB/Common.ini"
@@ -114,7 +114,7 @@ services:
       dockerfile: Dockerfile
     init: true
     restart: unless-stopped
-    # network_mode: host
+    network_mode: host
     depends_on:
       - mirakc
       - b25
