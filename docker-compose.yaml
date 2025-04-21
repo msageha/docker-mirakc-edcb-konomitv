@@ -50,7 +50,7 @@ services:
   #   ports:
   #     - 40773:40773/tcp
 
-  mirakurun:
+  mirakc:
     container_name: mirakurun-3.9.0
     build:
       context: "./mirakurun"
@@ -89,7 +89,7 @@ services:
     network_mode: host
     depends_on:
       - mirakc
-      - b25
+      # - b25
     command: /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
     volumes:
       - type: bind
@@ -112,8 +112,8 @@ services:
     depends_on:
       mirakc:
         condition: service_started
-      b25:
-        condition: service_started
+      # b25:
+      #   condition: service_started
       edcb_chscan:
         condition: service_completed_successfully
     init: true
