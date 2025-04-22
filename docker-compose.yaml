@@ -85,65 +85,65 @@ services:
         max-file: "1"
         max-size: 10m
 
-  edcb_chscan:
-    container_name: EDCB_ChScan
-    build:
-      context: ./EDCB
-    init: true
-    networks:
-      - tv
-    depends_on:
-      - mirakurun
-      # - b25
-    command: /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
-    volumes:
-      - type: bind
-        source: "./EDCB/Common.ini"
-        target: "/var/local/edcb/Common.ini"
-      - type: bind
-        source: "./EDCB/EpgDataCap_Bon.ini"
-        target: "/var/local/edcb/EpgDataCap_Bon.ini"
-      - type: bind
-        source: "./EDCB/EpgTimerSrv.ini"
-        target: "/var/local/edcb/EpgTimerSrv.ini"
-      - type: bind
-        source: "./EDCB/Setting"
-        target: "/var/local/edcb/Setting"
+  # edcb_chscan:
+  #   container_name: EDCB_ChScan
+  #   build:
+  #     context: ./EDCB
+  #   init: true
+  #   networks:
+  #     - tv
+  #   depends_on:
+  #     - mirakurun
+  #     # - b25
+  #   command: /usr/local/bin/EpgDataCap_Bon -d BonDriver_LinuxMirakc.so -chscan
+  #   volumes:
+  #     - type: bind
+  #       source: "./EDCB/Common.ini"
+  #       target: "/var/local/edcb/Common.ini"
+  #     - type: bind
+  #       source: "./EDCB/EpgDataCap_Bon.ini"
+  #       target: "/var/local/edcb/EpgDataCap_Bon.ini"
+  #     - type: bind
+  #       source: "./EDCB/EpgTimerSrv.ini"
+  #       target: "/var/local/edcb/EpgTimerSrv.ini"
+  #     - type: bind
+  #       source: "./EDCB/Setting"
+  #       target: "/var/local/edcb/Setting"
 
-  edcb:
-    container_name: EDCB
-    build:
-      context: ./EDCB
-    depends_on:
-      mirakurun:
-        condition: service_started
-      # b25:
-      #   condition: service_started
-      edcb_chscan:
-        condition: service_completed_successfully
-    init: true
-    restart: unless-stopped
-    networks:
-      - tv
-    volumes:
-      - type: bind
-        source: "./EDCB/Common.ini"
-        target: "/var/local/edcb/Common.ini"
-      - type: bind
-        source: "./EDCB/EpgDataCap_Bon.ini"
-        target: "/var/local/edcb/EpgDataCap_Bon.ini"
-      - type: bind
-        source: "./EDCB/EpgTimerSrv.ini"
-        target: "/var/local/edcb/EpgTimerSrv.ini"
-      - type: bind
-        source: "./EDCB/Setting"
-        target: "/var/local/edcb/Setting"
-      - type: bind
-        source: "./EDCB/record"
-        target: "/record"
-    ports:
-      - 4510:4510
-      - 5510:5510
+  # edcb:
+  #   container_name: EDCB
+  #   build:
+  #     context: ./EDCB
+  #   depends_on:
+  #     mirakurun:
+  #       condition: service_started
+  #     # b25:
+  #     #   condition: service_started
+  #     edcb_chscan:
+  #       condition: service_completed_successfully
+  #   init: true
+  #   restart: unless-stopped
+  #   networks:
+  #     - tv
+  #   volumes:
+  #     - type: bind
+  #       source: "./EDCB/Common.ini"
+  #       target: "/var/local/edcb/Common.ini"
+  #     - type: bind
+  #       source: "./EDCB/EpgDataCap_Bon.ini"
+  #       target: "/var/local/edcb/EpgDataCap_Bon.ini"
+  #     - type: bind
+  #       source: "./EDCB/EpgTimerSrv.ini"
+  #       target: "/var/local/edcb/EpgTimerSrv.ini"
+  #     - type: bind
+  #       source: "./EDCB/Setting"
+  #       target: "/var/local/edcb/Setting"
+  #     - type: bind
+  #       source: "./EDCB/record"
+  #       target: "/record"
+  #   ports:
+  #     - 4510:4510
+  #     - 5510:5510
 
   konomitv:
     container_name: KonomiTV
