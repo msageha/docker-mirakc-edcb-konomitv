@@ -182,7 +182,7 @@ services:
   mysql:
     image: mariadb:10.5
     volumes:
-      - mysql-db:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_USER: epgstation
       MYSQL_PASSWORD: epgstation
@@ -219,7 +219,3 @@ services:
       - "9999:8888"
       - "9998:8889"
     restart: unless-stopped
-
-volumes:
-    mysql-db:
-        driver: local
