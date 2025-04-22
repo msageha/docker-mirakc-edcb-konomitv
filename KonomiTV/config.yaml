@@ -5,7 +5,7 @@ general:
     # 利用するバックエンド
     # EDCB・Mirakurun のいずれかを選択してください。
     # バックエンドに Mirakurun が選択されているときは、録画予約機能は利用できません。
-    backend: 'EDCB'
+    backend: 'Mirakurun'
 
     # 利用するバックエンドが EDCB のとき、常に Mirakurun / mirakc から放送波を受信するか
     # バックエンドに Mirakurun が選択されているときは効果がありません。
@@ -18,13 +18,13 @@ general:
     # tcp://edcb-namedpipe/ と指定すると、TCP API の代わりに名前付きパイプを使って通信します (ローカルのみ)。
     # 一部 Windows 環境では localhost の名前解決が遅いため、ストリーミング開始までの待機時間が長くなる場合があります。
     # EDCB と同じ PC に KonomiTV をインストールしている場合、localhost ではなく 127.0.0.1 の利用を推奨します。
-    edcb_url: 'tcp://127.0.0.1:4510/'
+    edcb_url: 'tcp://edcb:4510/'
 
     # Mirakurun / mirakc の HTTP API の URL
     # バックエンドに Mirakurun が選択されているときに利用されます。
     # 一部 Windows 環境では localhost の名前解決が遅いため、ストリーミング開始までの待機時間が長くなる場合があります。
     # Mirakurun / mirakc と同じ PC に KonomiTV をインストールしている場合、localhost ではなく 127.0.0.1 の利用を推奨します。
-    mirakurun_url: 'http://127.0.0.1:40772/'
+    mirakurun_url: 'http://mirakurun:40772/'
 
     # 利用するエンコーダー
     # FFmpeg・QSVEncC・NVEncC・VCEEncC・rkmppenc から選択してください。
@@ -34,7 +34,7 @@ general:
     # Geforce などの NVIDIA GPU をお使いなら、NVEncC が使えます。
     # Radeon などの AMD GPU をお使いなら、VCEEncC が使えます。
     # RK3588 などの Rockchip SoC 搭載の ARM SBC をお使いなら、rkmppenc が使えます (いくつか事前設定が必要です) 。
-    encoder: 'FFmpeg'
+    encoder: 'QSVEncC'
 
     # 番組情報の更新間隔 (分)
     # 番組情報を EDCB または Mirakurun / mirakc から取得する間隔を設定します。デフォルトは 5 (分) です。

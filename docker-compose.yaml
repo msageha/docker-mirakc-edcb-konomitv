@@ -1,3 +1,7 @@
+networks:
+  tv:
+    driver: bridge
+
 services:
   # mirakc:
   #   container_name: mirakc
@@ -57,7 +61,8 @@ services:
     cap_add:
       - SYS_ADMIN
       - SYS_NICE
-    network_mode: host
+    networks:
+      - tv
     ports:
       - "40772:40772"
       - "9229:9229"
@@ -85,7 +90,8 @@ services:
     build:
       context: ./EDCB
     init: true
-    network_mode: host
+    networks:
+      - tv
     depends_on:
       - mirakurun
       # - b25
@@ -117,7 +123,8 @@ services:
         condition: service_completed_successfully
     init: true
     restart: unless-stopped
-    network_mode: host
+    networks:
+      - tv
     volumes:
       - type: bind
         source: "./EDCB/Common.ini"
@@ -135,8 +142,8 @@ services:
         source: "./EDCB/record"
         target: "/record"
     ports:
-      - 4510:4510/tcp
-      - 5510:5510/tcp
+      - 4510:4510
+      - 5510:5510
 
   konomitv:
     container_name: KonomiTV
@@ -146,6 +153,8 @@ services:
     init: true
     restart: unless-stopped
     network_mode: host
+    networks:
+      - tv
     depends_on:
       - mirakurun
       # - b25
@@ -181,7 +190,8 @@ services:
       TZ: "Asia/Tokyo"
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --performance-schema=false --expire_logs_days=1
     restart: unless-stopped
-    network_mode: host
+    networks:
+      - tv
     logging:
       options:
         max-size: "10m"
@@ -199,7 +209,8 @@ services:
       - ./recorded:/app/recorded
     environment:
       TZ: "Asia/Tokyo"
-    network_mode: host
+    networks:
+      - tv
     depends_on:
       - mirakurun
       - mysql
