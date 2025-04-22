@@ -157,7 +157,7 @@ services:
     depends_on:
       - mirakurun
       # - b25
-      - edcb
+      # - edcb
     volumes:
       - type: bind
         source: './KonomiTV/config.yaml'
