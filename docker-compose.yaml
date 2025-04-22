@@ -152,7 +152,6 @@ services:
       dockerfile: Dockerfile
     init: true
     restart: unless-stopped
-    network_mode: host
     networks:
       - tv
     depends_on:
@@ -177,6 +176,8 @@ services:
         target: '/host-rootfs/KonomiTV/data/capture'
     devices:
       - '/dev/dri/:/dev/dri/'
+    ports:
+      - 7000:7000
 
   mysql:
     image: mariadb:10.5
