@@ -6,7 +6,7 @@ services:
   mirakurun:
     container_name: mirakurun-4.0.0
     build:
-      context: "./mirakurun"
+      context: ./mirakurun
     cap_add:
       - SYS_ADMIN
       - SYS_NICE
@@ -20,7 +20,7 @@ services:
       - ./mirakurun/conf:/app-config
       - ./mirakurun/data:/app-data
     environment:
-      TZ: "Asia/Tokyo"
+      TZ: Asia/Tokyo
     devices:
       - /dev/bus:/dev/bus
       - /dev/px4video0:/dev/px4video0
@@ -31,7 +31,7 @@ services:
     logging:
       driver: json-file
       options:
-        max-file: "1"
+        max-file: 1
         max-size: 10m
 
   konomitv:
@@ -47,22 +47,22 @@ services:
       - mirakurun
     volumes:
       - type: bind
-        source: './KonomiTV/config.yaml'
-        target: '/code/config.yaml'
+        source: ./KonomiTV/config.yaml
+        target: /code/config.yaml
       - type: bind
-        source: './KonomiTV/server/data/'
-        target: '/code/server/data/'
+        source: ./KonomiTV/server/data/
+        target: /code/server/data/
       - type: bind
-        source: './KonomiTV/server/logs/'
-        target: '/code/server/logs/'
+        source: ./KonomiTV/server/logs/
+        target: /code/server/logs/
       - type: bind
-        source: './KonomiTV/data/record'
-        target: '/host-rootfs/KonomiTV/data/record'
+        source: ./KonomiTV/data/record
+        target: /host-rootfs/KonomiTV/data/record
       - type: bind
-        source: './KonomiTV/data/capture'
-        target: '/host-rootfs/KonomiTV/data/capture'
+        source: ./KonomiTV/data/capture
+        target: /host-rootfs/KonomiTV/data/capture
     devices:
-      - '/dev/dri/:/dev/dri/'
+      - /dev/dri/:/dev/dri/
     ports:
       - 7000:7000
 
@@ -75,20 +75,24 @@ services:
       MYSQL_PASSWORD: epgstation
       MYSQL_ROOT_PASSWORD: epgstation
       MYSQL_DATABASE: epgstation
-      TZ: "Asia/Tokyo"
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --performance-schema=false --expire_logs_days=1
+      TZ: Asia/Tokyo
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --performance-schema=false
+      - --expire_logs_days=1
     restart: unless-stopped
     networks:
       - tv
     logging:
       options:
-        max-size: "10m"
-        max-file: "3"
+        max-size: 10m
+        max-file: 3
 
   epgstation:
     build:
-      context: "./epgstation"
-      dockerfile: "debian.Dockerfile"
+      context: ./epgstation
+      dockerfile: debian.Dockerfile
     volumes:
       - ./epgstation/config:/app/config
       - ./epgstation/data:/app/data
@@ -96,12 +100,12 @@ services:
       - ./epgstation/logs:/app/logs
       - ./recorded:/app/recorded
     environment:
-      TZ: "Asia/Tokyo"
+      TZ: Asia/Tokyo
     networks:
       - tv
     depends_on:
       - mirakurun
       - mysql
     ports:
-      - "9999:8888"
+      - 9999:8888
     restart: unless-stopped
